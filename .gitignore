@@ -1,0 +1,5 @@
+config.php
+storage/uploads/*
+storage/sessions/*
+!storage/.htaccess
+.DS_Store

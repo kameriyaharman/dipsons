@@ -1,0 +1,137 @@
+-- Dipsons database schema (MySQL 5.7+ / MariaDB 10.3+)
+
+CREATE TABLE IF NOT EXISTS admins (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  username VARCHAR(60) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(20) NOT NULL DEFAULT 'staff',
+  active TINYINT(1) NOT NULL DEFAULT 1,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS settings (
+  k VARCHAR(80) PRIMARY KEY,
+  v TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS service_categories (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  slug VARCHAR(60) NOT NULL UNIQUE,
+  name VARCHAR(120) NOT NULL,
+  sort INT NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS services (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  category_id INT NULL,
+  slug VARCHAR(80) NOT NULL UNIQUE,
+  name VARCHAR(120) NOT NULL,
+  short_desc VARCHAR(255) NOT NULL DEFAULT '',
+  tagline VARCHAR(255) NOT NULL DEFAULT '',
+  tags VARCHAR(255) NOT NULL DEFAULT '',
+  what_we_do TEXT,
+  documents TEXT,
+  fee_note VARCHAR(255) NOT NULL DEFAULT '',
+  icon VARCHAR(40) NOT NULL DEFAULT 'file',
+  color VARCHAR(10) NOT NULL DEFAULT 'red',
+  sort INT NOT NULL DEFAULT 0,
+  show_in_nav TINYINT(1) NOT NULL DEFAULT 0,
+  active TINYINT(1) NOT NULL DEFAULT 1,
+  KEY (category_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS customers (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(120) NOT NULL DEFAULT '',
+  mobile VARCHAR(15) NOT NULL UNIQUE,
+  city VARCHAR(80) NOT NULL DEFAULT '',
+  notify_whatsapp TINYINT(1) NOT NULL DEFAULT 1,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  last_login_at DATETIME NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS vehicles (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  customer_id INT NOT NULL,
+  number VARCHAR(20) NOT NULL,
+  type VARCHAR(30) NOT NULL DEFAULT '',
+  model VARCHAR(80) NOT NULL DEFAULT '',
+  insurance_expiry DATE NULL,
+  puc_expiry DATE NULL,
+  tax_expiry DATE NULL,
+  fitness_expiry DATE NULL,
+  permit_expiry DATE NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY cust_num (customer_id, number),
+  KEY (number)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS enquiries (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  code VARCHAR(20) NULL UNIQUE,
+  customer_id INT NULL,
+  vehicle_id INT NULL,
+  name VARCHAR(120) NOT NULL,
+  mobile VARCHAR(15) NOT NULL,
+  vehicle_type VARCHAR(30) NOT NULL DEFAULT '',
+  vehicle_number VARCHAR(20) NOT NULL DEFAULT '',
+  vehicle_model VARCHAR(80) NOT NULL DEFAULT '',
+  service_names VARCHAR(500) NOT NULL DEFAULT '',
+  insurance_expiry DATE NULL,
+  puc_expiry DATE NULL,
+  message TEXT,
+  address VARCHAR(255) NOT NULL DEFAULT '',
+  preferred VARCHAR(60) NOT NULL DEFAULT '',
+  remind TINYINT(1) NOT NULL DEFAULT 1,
+  source VARCHAR(20) NOT NULL DEFAULT 'website',
+  status VARCHAR(20) NOT NULL DEFAULT 'new',
+  assigned_to VARCHAR(80) NOT NULL DEFAULT '',
+  callback_at DATETIME NULL,
+  charges VARCHAR(255) NOT NULL DEFAULT '',
+  payment_status VARCHAR(20) NOT NULL DEFAULT 'pending',
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY (status), KEY (mobile), KEY (customer_id), KEY (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS enquiry_services (
+  enquiry_id INT NOT NULL,
+  service_id INT NOT NULL,
+  PRIMARY KEY (enquiry_id, service_id),
+  KEY (service_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS documents (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  enquiry_id INT NULL,
+  customer_id INT NULL,
+  label VARCHAR(80) NOT NULL DEFAULT 'Document',
+  filename VARCHAR(255) NOT NULL,
+  original_name VARCHAR(255) NOT NULL DEFAULT '',
+  mime VARCHAR(100) NOT NULL DEFAULT '',
+  size INT NOT NULL DEFAULT 0,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY (enquiry_id), KEY (customer_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS enquiry_notes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  enquiry_id INT NOT NULL,
+  kind VARCHAR(20) NOT NULL DEFAULT 'note',
+  text TEXT NOT NULL,
+  by_name VARCHAR(80) NOT NULL DEFAULT '',
+  public TINYINT(1) NOT NULL DEFAULT 0,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY (enquiry_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS reminder_log (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  vehicle_id INT NOT NULL,
+  kind VARCHAR(20) NOT NULL,
+  due_date DATE NOT NULL,
+  sent_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  by_name VARCHAR(80) NOT NULL DEFAULT '',
+  KEY (vehicle_id, kind, due_date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
