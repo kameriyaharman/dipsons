@@ -7,9 +7,10 @@ $nav = [['/', 'Home'], ['/services', 'Services'], ['/insurance', 'Insurance'], [
 $cur = url_path();
 $f = flash();
 ?><!doctype html>
-<html lang="en">
+<html lang="en" translate="no">
 <head>
 <meta charset="utf-8">
+<meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= e(($title ? $title . ' — ' : '') . 'Dipsons Pollution & Insurance Centre, Simlaguri') ?></title>
 <meta name="description" content="<?= e($meta ?? 'Insurance, pollution (PUC), road tax, fitness, permit, ownership transfer, FASTag, GPS, VLTD and all RTO work for every vehicle at NRL Bharat Petrol Pump, Simlaguri, Baksa, Assam.') ?>">

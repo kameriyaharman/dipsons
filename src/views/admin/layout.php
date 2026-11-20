@@ -3,9 +3,10 @@ $f = flash();
 $a = admin();
 $items = [['dash', '/admin', 'dashboard', 'Dashboard'], ['enq', '/admin/enquiries', 'clipboard', 'Enquiries'], ['cust', '/admin/customers', 'users', 'Customers'], ['rem', '/admin/reminders', 'bell', 'Reminders'], ['svc', '/admin/services', 'layers', 'Services & fees'], ['content', '/admin/content', 'image', 'Website content'], ['set', '/admin/settings', 'settings', 'Settings']];
 ?><!doctype html>
-<html lang="en">
+<html lang="en" translate="no">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="google" content="notranslate"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= e($title) ?> · Dipsons Admin</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="/assets/img/icon-192.png">

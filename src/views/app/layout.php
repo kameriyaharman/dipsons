@@ -2,9 +2,10 @@
 $f = flash();
 $tabs = [['home', '/app/home', 'home', 'Home'], ['services', '/app/services', 'grid', 'Services'], ['enq', '/app/enquiries', 'clipboard', 'Enquiries'], ['rem', '/app/reminders', 'bell', 'Reminders'], ['me', '/app/profile', 'user', 'Profile']];
 ?><!doctype html>
-<html lang="en">
+<html lang="en" translate="no">
 <head>
 <meta charset="utf-8">
+<meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title><?= e($title ?? 'Dipsons') ?> · Dipsons</title>
 <meta name="theme-color" content="#1f6b35">

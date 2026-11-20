@@ -17,7 +17,7 @@
   </form>
   <p class="center small muted"><a href="/app/guest" class="link">Or continue as guest to send an enquiry</a></p>
   <p class="center small muted apkdl"><a href="/downloads/Dipsons.apk" download class="link">📲 Download Android app (APK)</a></p>
-  <script>if(window.matchMedia('(display-mode: standalone)').matches||document.referrer.startsWith('android-app://'))document.querySelector('.apkdl').hidden=true</script>
+  <script>if(/DipsonsApp/.test(navigator.userAgent)||window.matchMedia('(display-mode: standalone)').matches)document.querySelector('.apkdl').hidden=true</script>
 </div>
 <script>setTimeout(function(){var s=document.getElementById('splash');if(s)s.classList.add('gone')},<?= empty($_SESSION['splash_seen']) ? 1400 : 0 ?>);</script>
 <?php $_SESSION['splash_seen'] = 1; ?>

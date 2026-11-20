@@ -17,5 +17,5 @@
     <button class="btn green block sm">Save</button>
   </form>
   <a class="btn ghost block" href="/app/logout"><?= icon('logout', 16) ?> Logout</a>
-  <p class="center small muted">Install this app: open the browser menu ⋮ and tap “Add to Home screen”.</p>
+  <?php if (!str_contains($_SERVER['HTTP_USER_AGENT'] ?? '', 'DipsonsApp')): ?><p class="center small muted"><a class="link" href="/downloads/Dipsons.apk" download>📲 Download Android app</a></p><?php endif; ?>
 </main>
