@@ -67,7 +67,8 @@ $f = flash();
       <a href="<?= tel($p1) ?>"><?= e(fmt_mobile($p1)) ?></a>
       <?php if ($p2): ?><a href="<?= tel($p2) ?>"><?= e(fmt_mobile($p2)) ?></a><?php endif; ?>
       <a href="<?= wa_link($wa) ?>" target="_blank" rel="noopener">WhatsApp us</a>
-      <a href="/app">Download our app</a>
+      <a href="/downloads/Dipsons.apk" download>Download Android app (APK)</a>
+      <a href="/app">Open web app</a>
     </div>
   </div>
   <div class="wrap copy">© <?= date('Y') ?> Dipsons Pollution &amp; Insurance Centre, Simlaguri. All rights reserved.</div>

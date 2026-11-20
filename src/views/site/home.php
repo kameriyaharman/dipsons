@@ -112,7 +112,7 @@ $chips = array_slice(services_all(), 0, 8);
 <section class="sec">
   <div class="wrap faqwrap">
     <div><div class="eyebrow">FAQ</div><h2>Common questions</h2><p class="muted">Still have a question? Call or WhatsApp us — we reply quickly.</p>
-      <a class="btn btn-outline" href="/app"><?= icon('zap', 16) ?> Get the Dipsons app</a></div>
+      <a class="btn btn-outline" href="/downloads/Dipsons.apk" download><?= icon('download', 16) ?> Download Android app</a></div>
     <div class="faq">
       <?php foreach (setting_json('faq') as [$qq, $aa]): ?>
         <details><summary><?= e($qq) ?></summary><p><?= e($aa) ?></p></details>
