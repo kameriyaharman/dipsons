@@ -15,7 +15,7 @@ DirectoryIndex index.php
   # Never serve private folders / files directly
   RewriteRule ^(src|storage|docker)(/|$) - [F,L]
   RewriteRule ^(config\.php|config\.sample\.php|Dockerfile|README\.md|\.user\.ini)$ - [F,L]
-  RewriteRule (^|/)\. - [F,L]
+  RewriteRule (^|/)\.(?!well-known/) - [F,L]
 
   # Everything that is not a real file goes to index.php
   RewriteCond %{REQUEST_FILENAME} !-f
@@ -35,3 +35,4 @@ DirectoryIndex index.php
 </IfModule>
 
 AddType application/manifest+json .webmanifest
+AddType application/vnd.android.package-archive .apk

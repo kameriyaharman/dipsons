@@ -1,0 +1,31 @@
+plugins { id 'com.android.application' }
+
+def host = project.property('appHost')
+
+android {
+    namespace 'in.dipsons.app'
+    compileSdk 34
+    defaultConfig {
+        applicationId 'in.dipsons.app'
+        minSdk 21
+        targetSdk 34
+        versionCode Integer.parseInt(project.property('appVersionCode'))
+        versionName project.property('appVersionName')
+        resValue 'string', 'hostName', host
+        resValue 'string', 'launchUrl', "https://${host}/app"
+        resValue 'string', 'assetStatements',
+            "[{ \\\"relation\\\": [\\\"delegate_permission/common.handle_all_urls\\\"], \\\"target\\\": {\\\"namespace\\\": \\\"web\\\", \\\"site\\\": \\\"https://${host}\\\"}}]"
+        manifestPlaceholders = [hostName: host]
+    }
+    buildTypes {
+        release { minifyEnabled false }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.5.0'
+}

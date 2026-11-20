@@ -6,6 +6,17 @@ if ($path === '/') {
     render('site/home', ['title' => null, 'groups' => services_grouped()], $L);
 }
 
+// Android app (Trusted Web Activity) — proves the app and the website belong together
+if ($path === '/.well-known/assetlinks.json') {
+    header('Content-Type: application/json');
+    echo json_encode([[
+        'relation' => ['delegate_permission/common.handle_all_urls'],
+        'target' => ['namespace' => 'android_app', 'package_name' => cfg('ANDROID_PACKAGE', 'in.dipsons.app'),
+                     'sha256_cert_fingerprints' => array_map('trim', explode(',', (string)cfg('ANDROID_SHA256', 'DE:40:C8:6F:84:FF:63:12:9C:2B:FB:30:C9:82:35:A7:95:8F:F8:30:AB:AC:99:42:A1:DC:74:F6:60:6F:FB:5E')))],
+    ]], JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
 if ($path === '/services') {
     render('site/services', ['title' => 'All services', 'groups' => services_grouped()], $L);
 }
